@@ -1,0 +1,32 @@
+# Deployment app
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conversao-temperatura-web
+spec:
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        image: gilsonsilvati/conversao-temperatura:v1
+        ports:
+        - containerPort: 8080
+---
+# Service app
+apiVersion: v1
+kind: Service
+metadata:
+  name: conversao-temperatura-web
+spec:
+  selector:
+    app: web
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: NodePort
